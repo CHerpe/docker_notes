@@ -64,6 +64,25 @@ Schéma de la base d l'écosystème Docker :
 - **LABEL**
 - - Permet de stocker des infos sur l'image qu'on pourra inspecter via `docker image inspect ID_IMAGE`
 
+## Docker Hub
+
+hub.docker.com   
+`docker login` pour se log en console
+
+**Récupérer une image**
+- `docker image pull node`
+- - Permet de récupérer l'image de node sur docker hub
+- - Mais fait automatiquement si on fait un node run et que node n'est pas une de nos images locale 
+
+**Publier une image**
+- Créer un répertoire comme sur github par ex 
+- `docker image push ID_IMAGE` 
+
+**Technique de partage alternative**
+- Plutôt que d'utiliser docker hub, on peut créer un fichier tar, grace à `docker image save`  
+- On peut ensuite la lancer sur une autre machine via `docker image load`
+- De même avec `docker container export` puis `docker image import` mais cette fois pour copier un container en particulier, par ex pour le tester
+
 ## Commandes de base
 
 **Lister les containers**
@@ -108,6 +127,7 @@ Schéma de la base d l'écosystème Docker :
 
 **Créer une image custom**
 - `Docker build -t IMAGE_NAME:IMAGE_VERSION PATH_TO_DOCKERFILE`
+- - Par convention le nom est de la forme utilisateur/répertoire:version
 
 **Voir les logs d'un container**
 - `Docker container logs ID_CONTAINER`
