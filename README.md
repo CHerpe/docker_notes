@@ -47,6 +47,8 @@ Schéma de la base d l'écosystème Docker :
 - On peut aussi créer une image depuis un container (alors que normalement c'est l'inverse !) - mais peu utile
 - - On peut utiliser `docker container commit`
 
+L'ordre des instructions est important. En effet, si on rebuild une image déjà buildé, docker va utilisé le cache et donc être ultra rapide. Dès qu'il tombe sur une ligne dans laquelle un changement a eu lieu, le cache va être invalidé et tout va être refait à parti de là.
+
 ### Instructions: Dockerfile
 - **FROM**
 - **RUN** 
@@ -136,10 +138,16 @@ hub.docker.com
 **Voir l'historique des modifs sur l'image**
 - `Docker image history ID_CONTAINER`
 
+**Lancer une image**
+- `Docker run ID_IMAGE`
+Mais si on veut y accéder depuis notre navigateur, il peut y avoir beosin de brancher le port de notre ordi sur le port du container :
+- `Docker run -p PORT_HOST:PORT_CONTAINER ID_IMAGE`
+En effet, les flux sortant sont autorisés sur les containers, mais les entrant bloqués par défaut.
+
 ## Lexique
 
 **Namespace**: espaces isolés sur un système Linux  
 **Cgroups**: control groups - permet de limiter l'accès des processus aux ressources  
 **Kernel**: noyau du système qui gère la répartition des capacités du hardware  
 **Hypervisor**: chef d'orchestre qui répartit les ressources à plusieurs VM  
-**Node**: groupement de plusieurs container qui échanges des données  
+**Une Node**: groupement de plusieurs container qui échanges des données  
