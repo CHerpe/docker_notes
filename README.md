@@ -1,5 +1,7 @@
 # Notes bases docker
 
+*Ces notes ot pour objectif de servir de mémo de la formation Dyma Docker*
+
 ## Pourquoi faire ?
 
 - Simplifier l’installation d’une application
@@ -36,44 +38,44 @@ Schéma de la base d l'écosystème Docker :
 
 ## Commandes de base
 
-** Lister les containers **
-- Docker ps (container en cours)
-- Docker ps -a (all)
+**Lister les containers**
+- `Docker ps` (container en cours)
+- `Docker ps -a` (all)
 
-** Comparer l'état à l'état de lancement **
-- Docker container diff ID_CONTAINER
+**Comparer l'état à l'état de lancement**
+- `Docker container diff ID_CONTAINER`
 
-** Accéder au terminal d'un container en execution **
-- Docker container attach ID_CONTAINER
+**Accéder au terminal d'un container en execution**
+- `Docker container attach ID_CONTAINER`
 
-** Lancer un container **
-- Docker container start ID_CONTAINER (simple)
-- Docker container start -ai ID_CONTAINER (avec accès terminal)
+**Lancer un container**
+- `Docker container start ID_CONTAINER` (simple)
+- `Docker container start -ai ID_CONTAINER` (avec accès terminal)
 
-** Renommer un container **
-- Docker container rename ID_CONTAINER NEW_NAME
+**Renommer un container**
+- `Docker container rename ID_CONTAINER NEW_NAME`
 
-** Créer un container **
-- Docker container create IMAGE_NAME (simple)
-- Docker container create -it IMAGE_NAME (permet accès terminal)
+**Créer un container**
+- `Docker container create IMAGE_NAME` (simple)
+- `Docker container create -it IMAGE_NAME` (permet accès terminal)
 
-** Supprimer tous les containers **
-- Docker container prune
+**Supprimer tous les containers**
+- `Docker container prune`
 
-** Voir processus en cours sur un container **
-- Docker contianer top ID_CONTAINER
+**Voir processus en cours sur un container**
+- `Docker contianer top ID_CONTAINER`
 
-** Transférer fichier local - container **
-- Docker container cp LOCAL_FILE ID_CONTAINER:TARGET_PATH
+**Transférer fichier local - container**
+- `Docker container cp LOCAL_FILE ID_CONTAINER:TARGET_PATH`
 
-** Stopper un container **
-- Docker container stop ID_CONTAINER
-- Docker container kill ID_CONTAINER (plus violent)
+**Stopper un container**
+- `Docker container stop ID_CONTAINER`
+- `Docker container kill ID_CONTAINER` (plus violent)
 
 ## Lexique
 
-** Namespace ** : espaces isolés sur un système Linux
-** Cgroups ** : control groups - permet de limiter l'accès des processus aux ressources
-** Kernel ** : noyau du système qui gère la répartition des capacités du hardware
-** Hypervisor ** : chef d'orchestre qui répartit les ressources à plusieurs VM
-** Node ** : groupement de plusieurs container qui échanges des données
+**Namespace**: espaces isolés sur un système Linux
+**Cgroups**: control groups - permet de limiter l'accès des processus aux ressources
+**Kernel**: noyau du système qui gère la répartition des capacités du hardware
+**Hypervisor**: chef d'orchestre qui répartit les ressources à plusieurs VM
+**Node**: groupement de plusieurs container qui échanges des données
