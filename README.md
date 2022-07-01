@@ -1,6 +1,6 @@
 # Notes bases docker
 
-*Ces notes ot pour objectif de servir de mémo de la formation Dyma Docker*
+*Ces notes ont pour objectif de servir de mémo de la formation Dyma Docker*
 
 ## Pourquoi faire ?
 
@@ -47,7 +47,7 @@ Schéma de la base d l'écosystème Docker :
 - On peut aussi créer une image depuis un container (alors que normalement c'est l'inverse !) - mais peu utile
 - - On peut utiliser `docker container commit`
 
-L'ordre des instructions est important. En effet, si on rebuild une image déjà buildé, docker va utilisé le cache et donc être ultra rapide. Dès qu'il tombe sur une ligne dans laquelle un changement a eu lieu, le cache va être invalidé et tout va être refait à parti de là.
+*L'ordre des instructions est important. En effet, si on rebuild une image déjà buildé, docker va utilisé le cache et donc être ultra rapide. Dès qu'il tombe sur une ligne dans laquelle un changement a eu lieu, le cache va être invalidé et tout va être refait à parti de là.*
 
 ### Instructions: Dockerfile
 - **FROM**
@@ -85,6 +85,24 @@ hub.docker.com
 - On peut ensuite la lancer sur une autre machine via `docker image load`
 - De même avec `docker container export` puis `docker image import` mais cette fois pour copier un container en particulier, par ex pour le tester
 
+## Persistance
+
+Il arrive qu'on lance un container et qu'au cours de sa vie, certaines modifications lui aient été apportées.   
+Problème : quand on fait un `docker container prune`, on perd toutes ces modifications... 3 solutions :
+- **Volumes (solution à priorisé)**
+- - Ce qu'on écrit dans un container est en fait mis dans un volume par docker qui lui persiste même si le container disparait
+- - On peut le partager entre plusieurs containers. Les modifs faites dans l'un sera enregistrée sur le volume et donc effective dans l'autre aussi.
+- -  `Docker run --mount type=volumne, source=VOLUME_NAME, target=PATH ID_IMAGE` - on lie le container qu'on créer à un volume
+- - Permet de ne pas avoir à se soucier des path contrairement aux bind mount
+
+- **Bind mount**
+- - On peut monter un fichier directement sur notre container.
+- - ce qu'on écrit dans le container se retrouve sur ce fichier lié et vice versa
+- - `Docker run --mount type=bind, source=URL, target=URL ID_IMAGE` - la source doit être absolute
+
+- **TMPFS**
+- - temporary files system : on stocke l'info sur la RAM 
+
 ## Commandes de base
 
 **Lister les containers**
@@ -118,7 +136,7 @@ hub.docker.com
 - `Docker system prune`
 
 **Voir processus en cours sur un container**
-- `Docker contianer top ID_CONTAINER`
+- `Docker container top ID_CONTAINER`
 
 **Transférer fichier local - container**
 - `Docker container cp LOCAL_FILE ID_CONTAINER:TARGET_PATH`
