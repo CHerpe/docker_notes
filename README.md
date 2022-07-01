@@ -103,6 +103,21 @@ Problème : quand on fait un `docker container prune`, on perd toutes ces modifi
 - **TMPFS**
 - - temporary files system : on stocke l'info sur la RAM 
 
+## Réseaux
+
+- **Bridge** (par défaut)
+- - Docker peut gérer plusieurs réseaux locaux qui peuvent ensuite accéder au web.
+- - On peut grouper des containers sur un réseau, ou en mettre hors réseau.
+- **Host**
+- - Chaque container a une adresse IP locale gérée par le router -> Docker n'aura pas la main
+- **Overlay**
+- - Permet de faire communiquer des réseaux de différents docker deamons ensemble via docker swarm
+
+On utilise pas l'adresse IP des containeurs pour communiquer car on ne la connait pas toujours et elle peut changer.  
+On peut utiliser `--link` pour lier un container à un autre et le choper sur le réseau grace à son nom (mais pénible).  
+
+=> On peut éviter ces problèmes en créant nos propres réseaux ce qui nous permet d'utiliser des DNS  
+
 ## Commandes de base
 
 **Lister les containers**
@@ -161,6 +176,27 @@ Problème : quand on fait un `docker container prune`, on perd toutes ces modifi
 Mais si on veut y accéder depuis notre navigateur, il peut y avoir beosin de brancher le port de notre ordi sur le port du container :
 - `Docker run -p PORT_HOST:PORT_CONTAINER ID_IMAGE`
 En effet, les flux sortant sont autorisés sur les containers, mais les entrant bloqués par défaut.
+
+**Voir les networks**
+- `Docker network ls`
+
+**Voir le détail d'un network** (permet de trouver par ex l'adresse d'un container)
+- `Docker network inspect NOM_CONTAINER`
+
+**Créer un network**
+- `Docker network create NAME`
+
+**Lancer un container sur un network**
+- `docker run --network NETWORK_NAME --name DNS_NAME ID_IMAGE`
+
+**Lancer un container sur un network host**
+- `docker run --network host ID_IMAGE`
+
+**Lancer un container hors réseau**
+- `docker run --network none ID_IMAGE`
+
+**Connecter un container à un network**
+- `docker network connect NETWORK CONTAINER`
 
 ## Lexique
 
