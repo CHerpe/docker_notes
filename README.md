@@ -110,6 +110,7 @@ Problème : quand on fait un `docker container prune`, on perd toutes ces modifi
 - - On peut grouper des containers sur un réseau, ou en mettre hors réseau.
 - **Host**
 - - Chaque container a une adresse IP locale gérée par le router -> Docker n'aura pas la main
+- - Fonctionne uniquement sous linux
 - **Overlay**
 - - Permet de faire communiquer des réseaux de différents docker deamons ensemble via docker swarm
 
@@ -117,6 +118,32 @@ On utilise pas l'adresse IP des containeurs pour communiquer car on ne la connai
 On peut utiliser `--link` pour lier un container à un autre et le choper sur le réseau grace à son nom (mais pénible).  
 
 => On peut éviter ces problèmes en créant nos propres réseaux ce qui nous permet d'utiliser des DNS  
+
+## Docker compose
+
+**Problème** :  
+Quand on lance un container, on doit à chaque fois lui définir des ports, volumes, réseau, envrionnement, ect ect puis le lancer via un gigantesque docker run  
+=> Les possibilités de faire une erreur sont légions. Et ce pour chaque container qui constituent notre application.  
+
+**Solution**:  
+- Chaque container de notre application est appelé service
+- Docker compose nous permettra de gérer tous ces service à un seul endroit
+- - Utilise un docker-compose.yml qui nous permettra de tout paramétrer et lancer
+
+Ex de docker-compose.yml: [docker-compose.yml](/tp3/docker-compose.yml)
+
+- On peut préciser un contexte pour le cas où nous avons plusieurs applications dans le même dossier
+
+### Commandes
+
+**Executer un fichier docker-compose.yml** (lance tous les containers définits)
+- `docker-compose up` 
+
+**Lancer juste un container**
+- `docker-compose run ID_CONTAINER_YML` 
+
+**Stopper tous les containers compose**
+- `docker-compose down` 
 
 ## Commandes de base
 

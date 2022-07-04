@@ -1,0 +1,57 @@
+version : "3.9"
+#Chaque service = un container
+services: 
+  #Nom du container
+  a:
+    #Propriétés
+    image: alpine
+    command: ls #ou entrypoint
+  b:
+    #Image personnalisée avec Dockerfile dans le meme dossier
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - FOLDER=test
+      labels:
+        - EMAIL=ks2@ks2.fr
+      environnement: 
+        #On peut aussi spécifier la valeur dans l'appelle console
+        - USER=tintin
+        #S'il n'y a pas de valuer, il ira la chercher dans le fichier .env
+        - NODE_ENV
+      #On peut aussi passer directement toutes les variables du .env
+      env_file:
+        - .env
+    ports:
+     - 80:80
+    volumes:
+      #ex pour bind mount
+      - type: bind
+        source: ./data
+        #target dans notre container
+        target:  /app/data
+      #ex pour volume - il faut le déclarer par ailleurs
+      - type: volume 
+        source: datavolume
+        target: /app/datavolume
+    networks:
+      - 'frontend'
+    #B ne va se lancer que si a est lancé
+    depends_on:
+      - a
+    #ON peut définir un restart quand le container s'arrête : "no" (default) | always | on-failure | unless-stopped
+    restart: "no" 
+volumes:
+  #Juste besoin de mettre : créer objet vide 
+  datavolume:
+    #Cette option permet de lui dire de ne pas le créer s'il ne trouve pas le volume : utile pour détécter un bug
+    external: true
+networks:
+  default:
+    name: mynetwork
+  frontend:
+    driver: bridge
+    
+
+    
